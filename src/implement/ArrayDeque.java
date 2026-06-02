@@ -1,7 +1,7 @@
 package implement;
 
 import refactor.StaticEndlessLinkedList;
-
+import java.util.Iterator;
 /**
  * Your implementation of an {@link ArrayDeque}.
  *
@@ -45,9 +45,19 @@ public class ArrayDeque<T> {
     public ArrayDeque(StaticEndlessLinkedList<T> linkedList) {
         
         // We recommend not implementing this until you complete Part 2.
-        
-        // Remove this line when you implement the method
-        throw new UnsupportedOperationException("Unimplemented");
+        if (linkedList == null) {   
+            throw new IllegalArgumentException("The list is null.");
+        }
+
+        T[] newArray = (T[]) new Object[2 * linkedList.size() + 1];
+        backingArray = newArray;
+
+        Iterator<T> iterator = linkedList.iterator();
+        for (int i = 0; i < linkedList.size(); i++) {
+            backingArray[i] = iterator.next();
+        }
+
+        size = linkedList.size();
     }
 
     /**
@@ -100,7 +110,7 @@ public class ArrayDeque<T> {
      */
     public void addLast(T data) {
         if (data == null) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("data can't be null.");
         }
         if (size == backingArray.length) {
             T[] newArray = (T[]) new Object[2 * backingArray.length];
@@ -112,6 +122,8 @@ public class ArrayDeque<T> {
 
             backingArray = newArray;
             front = 0;
+            backingArray[size] = data;
+            size++;
         } else {
             /*
             
@@ -150,7 +162,7 @@ public class ArrayDeque<T> {
     public T removeFirst() {
         //Error checking
         if (backingArray.length == 0 || size == 0) {
-            throw new java.util.NoSuchElementException();
+            throw new java.util.NoSuchElementException("The deque is empty.");
         }
         
         T temp = backingArray[front];
@@ -180,7 +192,7 @@ public class ArrayDeque<T> {
     public T removeLast() {
         //Error checking
         if (backingArray.length == 0 || size == 0) {
-            throw new java.util.NoSuchElementException();
+            throw new java.util.NoSuchElementException("The deque is empty.");
         }
     
         int index = (front + size - 1) % backingArray.length;
@@ -201,7 +213,7 @@ public class ArrayDeque<T> {
     public T getFirst() {
         // Remove this line when you implement the method
         if (size == 0) {
-            throw new java.util.NoSuchElementException();
+            throw new java.util.NoSuchElementException("The deque is empty.");
         }   
         T data;
         data = backingArray[front];

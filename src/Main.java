@@ -1,5 +1,7 @@
 
+import apply.Quackify;
 import apply.StaticQuackify;
+import refactor.EndlessLinkedList;
 import refactor.StaticEndlessLinkedList;
 
 import java.util.Random;
@@ -24,7 +26,7 @@ import java.util.Random;
  * points.
  *<p>
  *<br>
- * Agree Here: REPLACE THIS TEXT
+ * Agree Here: I agree
  */
 public class Main {
 
@@ -37,8 +39,7 @@ public class Main {
      * @apiNote This method must be implemented for unit tests to run
      */
     public static <T> StaticEndlessLinkedList<T> getEndlessLinkedListInstance() {
-        throw new UnsupportedOperationException("Instantiate your class here!"); // Replace this line in Part 2
-        // Example: return new YourEndlessLinkedListClass<>();
+        return new EndlessLinkedList<T>();
     }
 
     /**
@@ -49,8 +50,7 @@ public class Main {
      * @apiNote This method must be implemented for unit tests to run
      */
     public static StaticQuackify getQuackifyInstance() {
-        throw new UnsupportedOperationException("Instantiate your class here!"); // Replace this line in Part 3
-        // Example: return new YourQuackifyClass();
+        return new Quackify();
     }
 
     /**
@@ -62,7 +62,6 @@ public class Main {
      * @apiNote This method must be implemented for unit tests to run
      */
     public static StaticQuackify getQuackifyInstance(Random rand) {
-        throw new UnsupportedOperationException("Instantiate your class here!"); // Replace this line in Part 3
-        // Example: return new YourQuackifyClass(rand);
+        return new Quackify(rand);
     }
 }

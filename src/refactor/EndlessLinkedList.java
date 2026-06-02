@@ -7,10 +7,10 @@ package refactor;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class StaticEndlessLinkedListNew<T> extends StaticEndlessLinkedList<T> {
+public class EndlessLinkedList<T> extends StaticEndlessLinkedList<T> {
     
     //Constructors must state the name of the class. 
-    public StaticEndlessLinkedListNew() {
+    public EndlessLinkedList() {
         head = null;
         size = 0;
         
@@ -161,7 +161,12 @@ public class StaticEndlessLinkedListNew<T> extends StaticEndlessLinkedList<T> {
         int i = 0;
         
         if (head.getData().equals(data)) {
-            head = head.getNext();
+            if (size == 1) {
+                head = null;
+            } else {
+                head.setData(head.getNext().getData());
+                head.setNext(head.getNext().getNext());
+            }
             size--;
             return 0;
         }
@@ -223,7 +228,24 @@ public class StaticEndlessLinkedListNew<T> extends StaticEndlessLinkedList<T> {
      */
     @Override
     public void reverse() {
-        // TODO Auto-generated method stub
+        if (size <= 1) {
+            return;
+        }
+
+        Node<T> prev = head;
+        Node<T> curr = head.getNext();
+        Node<T> nextNode = null;
+
+        while (curr != head) {
+            nextNode = curr.getNext();
+            curr.setNext(prev);
+            prev = curr;
+            curr = nextNode;
+        }
+        
+        head.setNext(prev);
+        
+        head = prev;
     }
     /**
      * Retrieves your implementation of an iterator for
@@ -243,7 +265,28 @@ public class StaticEndlessLinkedListNew<T> extends StaticEndlessLinkedList<T> {
      */
     @Override
     public Iterator<T> iterator() {
-        // TODO Auto-generated method stub
-        return null;
+        return new LinkedListIterator();
     }
+    private class LinkedListIterator implements Iterator<T> {
+        private Node<T> curr = head;
+
+        @Override
+        public boolean hasNext() {
+            return curr != null;
+        }
+        
+        @Override
+        public T next() {
+            if (curr == null) {
+                throw new NoSuchElementException("The list is empty.");
+
+            }
+            
+            T data = curr.getData();
+            curr = curr.getNext();
+            return data;
+        }
+    }
+
 }
+
